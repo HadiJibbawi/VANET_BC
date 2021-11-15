@@ -1,0 +1,16 @@
+LOAD DATA INFILE 'C:/xampp/htdocs/elections/data.csv'
+INTO TABLE data_import
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+(name,family,father,mother,birth,sex,mazhabCha5se,sijil,mazhab,balda,kadaa,mohafaza,da2ira);
+
+
+ 
+INSERT INTO `person`( `first_name`, `middle_name`, `last_name`, `mother_name`,
+`birthday`, `mazhab_id`, `rakm_sijil`, `mantaka_id`)
+select name, father,family,mother,birth,mazhab,sijil,balda
+from data_import;
+
+UPDATE person p
+join mantaka m on p.mantaka_id = m.name
+ SET mantaka_id=m.id
